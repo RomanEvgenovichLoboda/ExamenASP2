@@ -8,38 +8,29 @@ function Show() {
                 let name = $("<b></b>").text(`${iterator['name']}`);
                 let mSteel = $("<li></li>").text(`MarkOfSteel: ${iterator['markOfSteel']}`);
                 let lMat = $("<li></li>").text(`liningMaterial: ${iterator['liningMaterial']}`);
-                let price = $("<b></b>").text(`Price - ${iterator['price']}`);
-                let butt = $("<button></buton>").addClass('btn btn-warning mt-auto').text('Buy')
+                let price = $("<b></b>").addClass('mb-3').text(`Price - ${iterator['price']}`);
+                let butt = $("<button></buton>").addClass('btn btn-warning mt-auto').text('Buy').css('color', 'white')
                     .mouseenter(function () {
                         butt.animate({
                             
-                        }, 500, function () {
+                        }, 300, function () {
                             butt.addClass("btn-danger");
                         });
-                })
+                    })
                     .mouseleave(function () {
                         pr.animate({
                            
                         }, 100, function () {
                             butt.removeClass("btn-danger");
                         });
-                });
-                let pr = $("<div></div>").addClass('card p-3 m-4 text-black shadow').css('width', '15rem').append(imUrl).append(name).append(mSteel).append(lMat).append(price).append(butt)
-                    .mouseenter(function () {
-                        pr.animate({
-                            width: '20rem'
-                        }, 500, function () {
-                            pr.addClass("shadow");
-                        });
-                    })
-                    .mouseleave(function () {
-                        pr.animate({
-                            width: '15rem'
-
-                        }, 100, function () {
-                            pr.removeClass("shadow");
-                        });
                     });
+                let pr = $("<div></div>").addClass('card p-3 m-4 text-black shadow').css('width', '18rem').append(imUrl).append(name).append(mSteel).append(lMat).append(price).append(butt)
+                    .mouseenter(function () {
+                        pr.addClass("shadow");
+                        pr.animate({ width: '20rem',height:'31rem' }, 300);})
+                    .mouseleave(function () {
+                        pr.removeClass("shadow");
+                        pr.animate({ width: '18rem', height: '29rem' }, 100);});
                 container.append(pr);
             }
         }
