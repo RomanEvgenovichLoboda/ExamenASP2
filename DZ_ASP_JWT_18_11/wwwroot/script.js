@@ -1,16 +1,45 @@
 function Show() {
-    let container = $('.cont').addClass('w-100 ');
+    let container = $('.cont').addClass('w-100 p-auto');
     container.children().remove();
-    $.get("/api/Knife/getall")
+    $.get("/api/Knife/GetAll")
         .done((data) => {
             for (const iterator of data) {
                 let imUrl = $("<img></img>").addClass('card-img-top').attr('src', iterator['imageUrl']);
                 let name = $("<b></b>").text(`${iterator['name']}`);
-                let mSteel = $("<h></h>").text(`MarkOfSteel: ${iterator['markOfSteel']}`);
-                let lMat = $("<h></h>").text(`liningMaterial: ${iterator['liningMaterial']}`);
-                let price = $("<p></p>").text(`Price - ${iterator['price']}`);
-                let butt = $("<button></buton>").addClass('btn btn-warning mt-auto').text('Buy');
-                let pr = $("<div></div>").addClass('card p-3 m-4 text-black').css('width', '18rem').append(imUrl).append(name).append(mSteel).append(lMat).append(price).append(butt);
+                let mSteel = $("<li></li>").text(`MarkOfSteel: ${iterator['markOfSteel']}`);
+                let lMat = $("<li></li>").text(`liningMaterial: ${iterator['liningMaterial']}`);
+                let price = $("<b></b>").text(`Price - ${iterator['price']}`);
+                let butt = $("<button></buton>").addClass('btn btn-warning mt-auto').text('Buy')
+                    .mouseenter(function () {
+                        butt.animate({
+                            
+                        }, 500, function () {
+                            butt.addClass("btn-danger");
+                        });
+                })
+                    .mouseleave(function () {
+                        pr.animate({
+                           
+                        }, 100, function () {
+                            butt.removeClass("btn-danger");
+                        });
+                });
+                let pr = $("<div></div>").addClass('card p-3 m-4 text-black shadow').css('width', '15rem').append(imUrl).append(name).append(mSteel).append(lMat).append(price).append(butt)
+                    .mouseenter(function () {
+                        pr.animate({
+                            width: '20rem'
+                        }, 500, function () {
+                            pr.addClass("shadow");
+                        });
+                    })
+                    .mouseleave(function () {
+                        pr.animate({
+                            width: '15rem'
+
+                        }, 100, function () {
+                            pr.removeClass("shadow");
+                        });
+                    });
                 container.append(pr);
             }
         }
@@ -23,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let login = $("#lg").val();
         let password = $("#ps").val();
         if (login != "" && password != "") {
-            $.post("/api/Authentication/login", {
+            $.post("/api/Authentication/Login", {
                 userName: login,
                 password: password,
             })
@@ -40,14 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
     $(".bt2").click(async() => {
         const token = sessionStorage.getItem(tokenKey);
          await $.ajax({
-            url: '/api/MyProduct/AddProduct',
+             url: '/api/Knife/AddKnife',
             type: 'POST',
             data: {
-                productId: 0,
-                productName: $(".nm").val(),
-                productDescription: $(".dsn").val(),
-                productCost: $(".cst").val(),
-                productStock: $(".stk").val(),
+                id: 0,
+                imageUrl: $(".url").val(),
+                name: $(".nm").val(),
+                
+                markOfSteel: $(".mst").val(),
+                liningMaterial: $(".lmt").val(),
+                price: $(".prc").val(),
             },
             headers: {
                 "Accept": "application/json",
